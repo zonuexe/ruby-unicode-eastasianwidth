@@ -20,9 +20,17 @@ class Unicode::EastAsianWidth::EawTxt
   # Line Parse RegExp
   RE_LINE_SIMPLE = /^(\D+);(#{types})/
 
+  # Line object of EAW.txt
   Line = Struct.new(:unival, :property, :comment)
 
+  # Comment of Plane 15
+  COMMENT_PLANE15 = 'Plane 15 Private Use'
+
+  # Comment of Plane 16
+  COMMENT_PLANE16 = 'Plane 16 Private Use'
+
   attr_reader :version
+  attr_accessor :table
 
   # @param [String] ver
   def initialize (ver)
@@ -32,17 +40,21 @@ class Unicode::EastAsianWidth::EawTxt
     else
       raise 'invalid version number.'
     end
+
+    @table = Array.new(0xE01EF)
   end
 
   # @param [Fixnum] num
   # @return [Unicode::EastAsianWidth::EawTxt::Line]
   def [] (num)
-    table[num] ||= nil
-  end
-
-  # @return [Hash]
-  def table
-    @table ||= {}
+    case num
+    when 0xF0000..0xFFFFD
+      table[num] ||= Line.new(num, :A, COMMENT_PLANE15)
+    when 0x100000..0x10FFFD
+      table[num] ||= Line.new(num, :A, COMMENT_PLANE16)
+    else
+      table[num] ||= nil
+    end
   end
 
   # @param [String,Symbol] ver
@@ -51,9 +63,9 @@ class Unicode::EastAsianWidth::EawTxt
     ver ||= @version
     case ver
     when Symbol
-      version = const_get(ver)
+      @version = const_get(ver)
     else
-      version = ver.to_s
+      @version = ver.to_s
     end
     self.class.check_version(version)
   end

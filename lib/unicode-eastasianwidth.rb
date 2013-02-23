@@ -9,12 +9,12 @@ module Unicode
 
     # East Asian Width property
     PROPERTY_VALUES = {
-      N:  PROPERTY.new(*%w[N Neutral],   1, 1),
-      A:  PROPERTY.new(*%w[A Ambiguous], 1, 1),
-      H:  PROPERTY.new(*%w[H HalfWidth], 1, 1),
-      W:  PROPERTY.new(*%w[W Wide],      1, 1),
-      F:  PROPERTY.new(*%w[F FullWidth], 1, 1),
-      Na: PROPERTY.new(*%w[Na Narrow],   1, 1),
+      N:  PROPERTY.new(:N,  'Neutral',   1, 1),
+      A:  PROPERTY.new(:A,  'Ambiguous', 1, 1),
+      H:  PROPERTY.new(:H,  'HalfWidth', 1, 1),
+      W:  PROPERTY.new(:W,  'Wide',      1, 1),
+      F:  PROPERTY.new(:F,  'FullWidth', 1, 1),
+      Na: PROPERTY.new(:Na, 'Narrow',    1, 1),
     }
 
     # @return [Hash]
