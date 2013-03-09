@@ -4,7 +4,7 @@ require 'unicode-eastasianwidth/version'
 module Unicode
   # EastAsianWidth namespace
   module EastAsianWidth
-    #
+    # EAW property struct class
     PROPERTY = Struct.new(:symbol, :name, :cjk, :other)
 
     # East Asian Width property
@@ -24,13 +24,34 @@ module Unicode
 
     # @return [Unicode::EastAsianWidth::EawTxt]
     def self.eaw
-      versions[:DEFAULT]
+      self[:DEFAULT]
+    end
+
+    # @param [Symbol,Stryng] key
+    # @return [Unicode::EastAsianWidth::PROPERTY]
+    def self.property(key)
+      PROPERTY.fetch(key.to_s)
+    end
+
+    # Define alias class-methods
+    class << self
+      alias p property
+    end
+
+    def self.default_version
+      @@default_version ||= Unicode::EastAsianWidth::EawTxt::KNOWN_VERSION
     end
 
     # @param [Symbol,String] version
     # @return [Unicode::EastAsianWidth::EawTxt]
     def self.[] (version)
-      key = version.intern
+      case version
+      when :DEFAULT
+        key = default_version
+      else
+        key = version.to_s
+      end
+
       eat = versions[key] || EawTxt.new(key)
       versions[key] ||= eat
       return eat
@@ -45,6 +66,23 @@ module Unicode
         self[version.intern] = eawtxt
       else
         raise ArgumentError, "require EawTxt (but #{eawtxt.class})"
+      end
+    end
+
+    # @param [String] filename
+    # @param [String] dir
+    def self.from_file(filename, dir=nil, &block)
+      paths = EawTxt.paths.map{ |p|
+        p + filename
+      }.select { |file|
+        File.file? file
+      }
+      source = paths.first
+      raise "#{filename} is NOT Found. (search path = #{EawTxt::PATH})"
+      if block_given?
+        return File.open(source, ?r, &block)
+      else
+        return File.open(source, ?r)
       end
     end
   end
