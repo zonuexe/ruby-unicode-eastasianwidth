@@ -1,6 +1,6 @@
-# Unicode::Eastasianwidth
+# Unicode::EastAsianWidth [![Build Status](https://travis-ci.org/zonuexe/ruby-unicode-eastasianwidth.png?branch=develop)](https://travis-ci.org/zonuexe/ruby-unicode-eastasianwidth) [![Code Climate](https://codeclimate.com/github/zonuexe/ruby-unicode-eastasianwidth.png)](https://codeclimate.com/github/zonuexe/ruby-unicode-eastasianwidth)
 
-TODO: Write a gem description
+Parse `EastAsianWidth.txt` of Unicode
 
 ## Lisence
 
@@ -20,7 +20,7 @@ This package includes work of **Unicode, Inc.**
 
 ### Other Files
 
-See `LICENSE.txt`.
+See `LICENSE.txt`. (NYSL or GPLv3)
 
 ## Installation
 
