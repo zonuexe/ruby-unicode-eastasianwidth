@@ -1,9 +1,10 @@
 require "unicode-eastasian-width/version"
 
 module Unicode
-  module Eastasian
-    module Width
-      # Your code goes here...
+  module EastSsian
+    class Width
+      def initialize
+      end
     end
   end
 end

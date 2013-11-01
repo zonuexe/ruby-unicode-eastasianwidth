@@ -1,6 +1,6 @@
 module Unicode
   module Eastasian
-    module Width
+    class Width
       VERSION = "0.0.1"
     end
   end
